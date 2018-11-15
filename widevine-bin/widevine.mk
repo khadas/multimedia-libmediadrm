@@ -5,7 +5,7 @@
 ################################################################################
 
 
-WIDEVINE_BIN_VERSION = $(BR2_PACKAGE_WIDEVINE_BIN_VERSION)
+WIDEVINE_BIN_VERSION = $(call qstrip,$(BR2_PACKAGE_WIDEVINE_BIN_VERSION))
 WIDEVINE_BIN_SITE = $(TOPDIR)/../multimedia/libmediadrm/widevine-bin/prebuilt-v$(WIDEVINE_BIN_VERSION)
 WIDEVINE_BIN_SITE_METHOD = local
 WIDEVINE_BIN_INSTALL_TARGET := YES
