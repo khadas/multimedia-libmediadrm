@@ -1,6 +1,4 @@
 menu "Media DRM Prebuilt"
 source "../multimedia/libmediadrm/widevine-bin/Config.in"
-source "../multimedia/libmediadrm/ffmpeg2-bin/Config.in"
 source "../multimedia/libmediadrm/libsecmem-bin/Config.in"
-
 endmenu

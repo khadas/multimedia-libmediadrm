@@ -5,10 +5,21 @@ config BR2_PACKAGE_WIDEVINE_BIN
           widevine prebuilt files.
 
           http://openlinux.amlogic.com
-
-config BR2_PACKAGE_WIDEVINE_BIN_VERSION
-        string "widevine prebuilt version"
-        default "10"
+choice
+        prompt "Widevine Version"
+        default BR2_PACKAGE_WIDEVINE_BIN_VERSION_14
         depends on BR2_PACKAGE_WIDEVINE_BIN
         help
-          widevine prebuilt version
+          Select the version of widevine so.
+
+config BR2_PACKAGE_WIDEVINE_BIN_VERSION_10
+        bool "widevine v10"
+        help
+          widevine prebuilt version v10 for 2017.
+
+config BR2_PACKAGE_WIDEVINE_BIN_VERSION_14
+        bool "widevine v14"
+        help
+          widevine prebuilt version v14 for 2019.
+
+endchoice
