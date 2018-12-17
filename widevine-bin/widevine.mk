@@ -25,6 +25,7 @@ endef
 define WIDEVINE_BIN_INSTALL_TARGET_CMDS
 	$(INSTALL) -D -m 0644 $(@D)/noarch/ta/*.ta $(TARGET_DIR)/lib/teetz/
 	$(INSTALL) -D -m 0644 $(@D)/$(BR2_ARCH).$(CC_TARGET_ABI_).$(CC_TARGET_FLOAT_ABI_)/*.so $(TARGET_DIR)/usr/lib/
+	$(INSTALL) -D -m 0755 $(@D)/$(BR2_ARCH).$(CC_TARGET_ABI_).$(CC_TARGET_FLOAT_ABI_)/widevine_ce_cdm_unittest $(TARGET_DIR)/usr/bin/
 endef
 
 $(eval $(generic-package))
