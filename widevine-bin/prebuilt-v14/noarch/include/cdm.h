@@ -646,6 +646,15 @@ class CDM_EXPORT Cdm : public ITimerClient {
   virtual Status decrypt(const InputBuffer& input,
                          const OutputBuffer& output) = 0;
 
+  // Decrypt the input as described by |input| and pass the output as described
+  // in |output|. Decryption will be attempted in the session identified by
+  // |session_id|, regardless of whether the |key_id| field of |input| refers to
+  // a key loaded in that session. This overload may be useful on platforms that
+  // need to play clear content through the secure path before a key is loaded.
+  virtual Status decrypt(const std::string& session_id,
+                         const InputBuffer& input,
+                         const OutputBuffer& output) = 0;
+
   // Sets a value in the custom app settings.  These are settings
   // that are sent with any message to the license server.  These methods
   // should only be used by advanced users maintaining existing systems.
