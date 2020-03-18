@@ -17,6 +17,7 @@ CC_TARGET_FLOAT_ABI_ := $(call qstrip,$(BR2_GCC_TARGET_FLOAT_ABI))
 
 define LIBSECMEM_BIN_INSTALL_STAGING_CMDS
 	$(INSTALL) -D -m 0644 $(@D)/$(BR2_ARCH).$(CC_TARGET_ABI_).$(CC_TARGET_FLOAT_ABI_)/*.so $(STAGING_DIR)/usr/lib/
+	$(INSTALL) -D -m 0644 $(@D)/noarch/include/* $(STAGING_DIR)/usr/include/
 endef
 
 define LIBSECMEM_BIN_INSTALL_TARGET_CMDS
