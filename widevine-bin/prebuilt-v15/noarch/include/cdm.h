@@ -89,7 +89,8 @@ class CDM_EXPORT Cdm : public ITimerClient {
     kResourceContention = 107,  // Recoverable
     kSessionStateLost = 108,    // Recoverable
     kSystemStateLost = 109,     // Recoverable
-    kOutputTooLarge = 109,      // Recoverable
+    kOutputTooLarge = 110,      // Recoverable
+    kNeedsServiceCertificate = 111,
 
     // This covers errors that we do not expect (see logs for details):
     kUnexpectedError = 99999,
@@ -131,6 +132,7 @@ class CDM_EXPORT Cdm : public ITimerClient {
     kHdcp2_0 = 1,
     kHdcp2_1 = 2,
     kHdcp2_2 = 3,
+    kHdcp2_3 = 4,
   } HdcpVersion;
 
   // Permissible usages for a key. Returned as a set of flags; multiple
@@ -343,6 +345,15 @@ class CDM_EXPORT Cdm : public ITimerClient {
                            const ClientInfo& client_info, IStorage* storage,
                            IClock* clock, ITimer* timer, LogLevel verbosity);
 
+  // This is a variant of the above function that allows the caller to pass a
+  // Sandbox ID. Platforms that use Sandbox IDs should use this initalize()
+  // function instead of the previous one. Platforms that do not use Sandbox IDs
+  // should not use this version of initialize().
+  static Status initialize(SecureOutputType secure_output_type,
+                           const ClientInfo& client_info, IStorage* storage,
+                           IClock* clock, ITimer* timer, LogLevel verbosity,
+                           const std::string& sandbox_id);
+
   // Query the CDM library version.
   static const char* version();
 
@@ -364,6 +375,21 @@ class CDM_EXPORT Cdm : public ITimerClient {
   // for use whenever possible.
   static Cdm* create(IEventListener* listener, IStorage* storage,
                      bool privacy_mode);
+
+  // This is a variant of the above function that allows the caller to specify
+  // that the IStorage should be treated as read-only. Passing true for this
+  // parameter will cause the Widevine CE CDM to prevent attempts to modify any
+  // data in the IStorage. Note that this is *not* the expected operation mode
+  // for most clients and will likely lead to playback failures. It should only
+  // be used in cases where read-only certificates and licenses have been
+  // pre-loaded on a device, such as the preloaded licenses in ATSC 3.
+  //
+  // It is not possible to mix read-only and non-read-only files in the same
+  // IStorage instance. A separate CDM with a separate IStorage pointing to the
+  // non-read-only files should be created with the read-only flag omitted or
+  // set to false.
+  static Cdm* create(IEventListener* listener, IStorage* storage,
+                     bool privacy_mode, bool storage_is_read_only);
 
   virtual ~Cdm() {}
 
