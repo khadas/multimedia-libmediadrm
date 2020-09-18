@@ -21,7 +21,7 @@ define YOUTUBESIGN_BIN_INSTALL_STAGING_CMDS
 endef
 
 define YOUTUBESIGN_BIN_INSTALL_TARGET_CMDS
-	$(INSTALL) -D -m 0644 $(@D)/noarch/ta/*.ta $(TARGET_DIR)/lib/teetz/
+	$(INSTALL) -D -m 0644 $(@D)/noarch/ta/v$(BR2_PACKAGE_TDK_VERSION)/*.ta $(TARGET_DIR)/lib/teetz/
 	$(INSTALL) -D -m 0644 $(@D)/$(BR2_ARCH).$(CC_TARGET_ABI_).$(CC_TARGET_FLOAT_ABI_)/*.so $(TARGET_DIR)/usr/lib/
 endef
 

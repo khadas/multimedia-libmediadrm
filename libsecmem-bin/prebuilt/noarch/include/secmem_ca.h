@@ -1,18 +1,29 @@
 /*
  * secmem_ca.h
  *
+ * Copyright (C) 2019 Amlogic, Inc. All rights reserved.
+ *
  *  Created on: Feb 2, 2020
  *      Author: tao
  */
+
 
 #ifndef _SECMEM_CA_H_
 #define _SECMEM_CA_H_
 
 #include <stdint.h>
+#include <secmem_types.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
+
+#define FLAG_(x, mask, shift) ((x & (mask)) << shift)
+#define SECMME_V2_FLAGS_TVP(x) FLAG_(x, 0xF, 0)
+#define SECMME_V2_FLAGS_VP9(x) FLAG_(x, 0xF, 4)
+#define SECMME_V2_FLAGS_VD_INDEX(x) FLAG_(x, 0xF, 9)
+#define SECMME_V2_FLAGS_USAGE(x) FLAG_(x, 0x7, 13)
+
 
 /**
  * Common API
@@ -46,70 +57,84 @@ unsigned int Secure_GetVp9HeaderSize(void *src,
 unsigned int Secure_V2_SessionCreate(void **sess);
 unsigned int Secure_V2_SessionDestroy(void **sess);
 unsigned int Secure_V2_Init(void *sess,
-                            uint32_t source,
-                            uint32_t flags,
-                            uint32_t paddr,
-                            uint32_t msize);
+                           uint32_t source,
+                           uint32_t flags,
+                           uint32_t paddr,
+                           uint32_t msize);
 unsigned int Secure_V2_MemCreate(void *sess,
-                            uint32_t *handle);
+                           uint32_t *handle);
 unsigned int Secure_V2_MemAlloc(void *sess,
-                            uint32_t handle,
-                            uint32_t size,
-                            uint32_t *phyaddr);
+                           uint32_t handle,
+                           uint32_t size,
+                           uint32_t *phyaddr);
 unsigned int Secure_V2_MemToPhy(void *sess,
-                            uint32_t handle,
-                            uint32_t *phyaddr);
+                           uint32_t handle,
+                           uint32_t *phyaddr);
 unsigned int Secure_V2_MemFill(void *sess,
-                            uint32_t handle,
-                            uint8_t *buffer,
-                            uint32_t offset,
-                            uint32_t size);
+                           uint32_t handle,
+                           uint32_t offset,
+                           uint8_t *buffer,
+                           uint32_t size);
 unsigned int Secure_V2_MemCheck(void *sess,
-                            uint32_t handle,
-                            uint8_t *buffer,
-                            uint32_t len);
+                           uint32_t handle,
+                           uint8_t *buffer,
+                           uint32_t len);
 unsigned int Secure_V2_MemExport(void *sess,
-                            uint32_t handle,
-                            int *fd);
+                           uint32_t handle,
+                           int *fd,
+                           uint32_t *maxsize);
 unsigned int Secure_V2_FdToHandle(void *sess,
-                            int fd);
+                           int fd);
 unsigned int Secure_V2_FdToPaddr(void *sess,
-                            int fd);
+                           int fd);
 unsigned int Secure_V2_MemFree(void *sess,
-                            uint32_t handle);
+                           uint32_t handle);
 unsigned int Secure_V2_MemRelease(void *sess,
-                            uint32_t handle);
+                           uint32_t handle);
 unsigned int Secure_V2_MemFlush(void *sess);
 unsigned int Secure_V2_MemClear(void *sess);
 unsigned int Secure_V2_SetCsdData(void*sess,
-                            unsigned char *csd,
-                            unsigned int csd_len);
+                           unsigned char *csd,
+                           unsigned int csd_len);
 unsigned int Secure_V2_GetCsdDataDrmInfo(void *sess,
-                            unsigned int srccsdaddr,
-                            unsigned int csd_len,
-                            unsigned int *store_csd_phyaddr,
-                            unsigned int *store_csd_size,
-                            unsigned int overwrite);
+                           unsigned int srccsdaddr,
+                           unsigned int csd_len,
+                           unsigned int *store_csd_phyaddr,
+                           unsigned int *store_csd_size,
+                           unsigned int overwrite);
 unsigned int Secure_V2_GetPadding(void *sess,
-                            unsigned int* pad_addr,
-                            unsigned int *pad_size,
-                            unsigned int pad_type);
+                           unsigned int* pad_addr,
+                           unsigned int *pad_size,
+                           unsigned int pad_type);
 unsigned int Secure_V2_GetVp9HeaderSize(void *sess,
-                            void *src,
-                            unsigned int size,
-                            unsigned int *header_size,
-                            uint32_t *frames);
+                           void *src,
+                           unsigned int size,
+                           unsigned int *header_size,
+                           uint32_t *frames);
 unsigned int Secure_V2_MergeCsdDataDrmInfo(void *sess,
-                            uint32_t *phyaddr,
-                            uint32_t *csdlen);
+                           uint32_t *phyaddr,
+                           uint32_t *csdlen);
 unsigned int Secure_V2_MergeCsdData(void *sess,
-                            uint32_t handle,
-                            uint32_t *csdlen);
+                           uint32_t handle,
+                           uint32_t *csdlen);
+unsigned int Secure_V2_Parse(void *sess,
+                           uint32_t type,
+                           uint32_t handle,
+                           uint8_t *buffer,
+                           uint32_t size,
+                           uint32_t *flag);
 unsigned int Secure_V2_ResourceAlloc(void *sess,
-                            uint32_t* phyaddr,
-                            uint32_t *size);
+                           uint32_t* phyaddr,
+                           uint32_t *size);
 unsigned int Secure_V2_ResourceFree(void *sess);
-
+unsigned int Secure_V2_BindTVP(void *sess,
+                           uint32_t cas_id);
+unsigned int Secure_V2_AudioValid(void *sess,
+                           void *src, // secure source phyaddr
+                           unsigned int size, //secure packet size
+                           unsigned int aud_type, // audio format AUD_VALID_TYPE
+                           unsigned char *aud_buf, // nonsecure output buf
+                           unsigned int buf_max_size); // aud_buf total size
 
 #ifdef __cplusplus
 }
