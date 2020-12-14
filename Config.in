@@ -3,4 +3,5 @@ source "../multimedia/libmediadrm/widevine-bin/Config.in"
 source "../multimedia/libmediadrm/libsecmem-bin/Config.in"
 source "../multimedia/libmediadrm/playready-bin/Config.in"
 source "../multimedia/libmediadrm/youtubesign-bin/Config.in"
+source "../multimedia/libmediadrm/libwfd_hdcp-bin/Config.in"
 endmenu

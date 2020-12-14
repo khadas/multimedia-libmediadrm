@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LIBWFD_HDCP_BIN
+        bool "libwfd_hdcp"
+        select BR2_PACKAGE_TDK
+        help
+          libhdcp prebuilt files.
+
+          http://openlinux.amlogic.com
