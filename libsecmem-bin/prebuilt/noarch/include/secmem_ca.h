@@ -140,6 +140,12 @@ unsigned int Secure_V2_GetSecmemSize(void *sess,
                            unsigned int *available);
 
 
+/*
+ * Sideband API
+ */
+
+unsigned int Secure_SetHandle(uint32_t handle);
+unsigned int Secure_GetHandle(uint32_t *handle);
 #ifdef __cplusplus
 }
 #endif
