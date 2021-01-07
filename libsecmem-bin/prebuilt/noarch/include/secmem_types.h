@@ -80,7 +80,10 @@ enum {
 enum {
     STREAM_TYPE_AVCC                                   = 1,
     STREAM_TYPE_AVC2NALU,
-    STREAM_TYPE_VP9
+    STREAM_TYPE_VP9,
+    STREAM_TYPE_HVCC,
+    STREAM_TYPE_HVC2NALU,
+    STREAM_TYPE_AV1,
 };
 
 enum {
@@ -88,6 +91,12 @@ enum {
     PARSER_H264_PPS_SEEN                               = 1 << 1,
     PARSER_H264_IDR_SEEN                               = 1 << 2,
     PARSER_H264_SLICE_SEEN                             = 1 << 3,
+};
 
+enum {
+    PARSER_H265_SPS_SEEN                               = 1 << 0,
+    PARSER_H265_PPS_SEEN                               = 1 << 1,
+    PARSER_H265_VPS_SEEN                               = 1 << 2,
+    PARSER_H265_SLICE_SEEN                             = 1 << 3,
 };
 #endif /*_SECMEM_TYPES_H_ */
