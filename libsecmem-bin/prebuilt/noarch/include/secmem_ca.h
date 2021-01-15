@@ -136,8 +136,10 @@ unsigned int Secure_V2_AudioValid(void *sess,
                            unsigned char *aud_buf, // nonsecure output buf
                            unsigned int buf_max_size); // aud_buf total size
 unsigned int Secure_V2_GetSecmemSize(void *sess,
-                           unsigned int *capacity,
-                           unsigned int *available);
+                           unsigned int *mem_capacity,
+                           unsigned int *mem_available,
+                           unsigned int *handle_capacity,
+                           unsigned int *handle_available);
 
 
 /*
