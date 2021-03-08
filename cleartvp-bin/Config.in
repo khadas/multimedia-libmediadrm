@@ -1,0 +1,7 @@
+config BR2_PACKAGE_CLEARTVP_BIN
+        bool "cleartvp"
+        select BR2_PACKAGE_TDK
+        help
+          cleartvp prebuilt files.
+
+          http://openlinux.amlogic.com
