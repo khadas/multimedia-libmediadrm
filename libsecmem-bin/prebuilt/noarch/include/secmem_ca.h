@@ -12,6 +12,7 @@
 #define _SECMEM_CA_H_
 
 #include <stdint.h>
+#include <stdbool.h>
 #include <secmem_types.h>
 
 #ifdef __cplusplus

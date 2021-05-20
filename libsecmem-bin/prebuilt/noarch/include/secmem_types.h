@@ -100,7 +100,7 @@ enum {
     PARSER_H265_SLICE_SEEN                             = 1 << 3,
 };
 
-enum cas_crypto_mode {
+typedef enum {
     ALGO_INVALID = -1,
     ALGO_AES_CBC = 0,
     ALGO_AES_CTR = 1,
@@ -108,9 +108,9 @@ enum cas_crypto_mode {
     ALGO_DVB_CSA3 = 3,
     ALGO_AES_OFB = 4,
     ALGO_AES_SCTE = 5,
-};
+} cas_crypto_mode;
 
-enum ca_sc2_algo_type {
+typedef enum {
     CA_ALGO_AES_ECB_CLR_END,
     CA_ALGO_AES_ECB_CLR_FRONT,
     CA_ALGO_AES_CBC_CLR_END,
@@ -124,11 +124,11 @@ enum ca_sc2_algo_type {
     CA_ALGO_CSA3,
     CA_ALGO_ASA,
     CA_ALGO_ASA_LIGHT
-};
+} ca_sc2_algo_type;
 
-enum ca_sc2_dsc_type {
+typedef enum {
     CA_DSC_COMMON_TYPE,
     CA_DSC_TSD_TYPE,/*just support AES descramble.*/
     CA_DSC_TSE_TYPE/*just support AES enscramble.*/
-};
+} ca_sc2_dsc_type;
 #endif /*_SECMEM_TYPES_H_ */
