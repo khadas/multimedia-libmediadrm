@@ -99,4 +99,36 @@ enum {
     PARSER_H265_VPS_SEEN                               = 1 << 2,
     PARSER_H265_SLICE_SEEN                             = 1 << 3,
 };
+
+enum cas_crypto_mode {
+    ALGO_INVALID = -1,
+    ALGO_AES_CBC = 0,
+    ALGO_AES_CTR = 1,
+    ALGO_DVB_CSA2 = 2,
+    ALGO_DVB_CSA3 = 3,
+    ALGO_AES_OFB = 4,
+    ALGO_AES_SCTE = 5,
+};
+
+enum ca_sc2_algo_type {
+    CA_ALGO_AES_ECB_CLR_END,
+    CA_ALGO_AES_ECB_CLR_FRONT,
+    CA_ALGO_AES_CBC_CLR_END,
+    CA_ALGO_AES_CBC_IDSA,
+    CA_ALGO_CSA2,
+    CA_ALGO_DES_SCTE41,
+    CA_ALGO_DES_SCTE52,
+    CA_ALGO_TDES_ECB_CLR_END,
+    CA_ALGO_CPCM_LSA_MDI_CBC,
+    CA_ALGO_CPCM_LSA_MDD_CBC,
+    CA_ALGO_CSA3,
+    CA_ALGO_ASA,
+    CA_ALGO_ASA_LIGHT
+};
+
+enum ca_sc2_dsc_type {
+    CA_DSC_COMMON_TYPE,
+    CA_DSC_TSD_TYPE,/*just support AES descramble.*/
+    CA_DSC_TSE_TYPE/*just support AES enscramble.*/
+};
 #endif /*_SECMEM_TYPES_H_ */

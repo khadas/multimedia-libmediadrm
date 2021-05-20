@@ -24,6 +24,9 @@ extern "C" {
 #define SECMME_V2_FLAGS_VD_INDEX(x) FLAG_(x, 0xF, 9)
 #define SECMME_V2_FLAGS_USAGE(x) FLAG_(x, 0x7, 13)
 
+#define TSN_PATH             "/sys/class/stb/tsn_source"
+#define TSN_IPTV             "local"
+#define TSN_DVB              "demod"
 
 /**
  * Common API
@@ -145,9 +148,44 @@ unsigned int Secure_V2_GetSecmemSize(void *sess,
 /*
  * Sideband API
  */
-
 unsigned int Secure_SetHandle(uint32_t handle);
 unsigned int Secure_GetHandle(uint32_t *handle);
+
+/*
+ * Cas API
+ */
+int Secure_SetTSNSource(const char *tsn_path,
+                           const char *tsn_from);
+
+int Secure_CreateDscCtx(
+                           void **secmem_sess);
+
+int Secure_CreateDscPipeline(
+                           void *secmem_sess,
+                           int cas_dsc_idx,
+                           uint32_t video_id,
+                           uint32_t audio_id,
+                           bool av_diff_ecm,
+                           int cur_sid);
+
+void Secure_GetDscParas(
+                           cas_crypto_mode mode,
+                           ca_sc2_algo_type *dsc_algo,
+                           ca_sc2_dsc_type *dsc_type);
+
+int Secure_StartDescrambling(
+                           void *secmem_sess,
+                           int dsc_algo,
+                           int dsc_type,
+                           int video_cas_sid,
+                           int audio_cas_sid);
+
+int Secure_StopDescrambling(
+                           void *secmem_sess);
+
+int Secure_DestroyDscCtx(
+                           void **secmem_sess);
+
 #ifdef __cplusplus
 }
 #endif
