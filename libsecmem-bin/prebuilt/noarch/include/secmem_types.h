@@ -97,7 +97,8 @@ enum {
     PARSER_H265_SPS_SEEN                               = 1 << 0,
     PARSER_H265_PPS_SEEN                               = 1 << 1,
     PARSER_H265_VPS_SEEN                               = 1 << 2,
-    PARSER_H265_SLICE_SEEN                             = 1 << 3,
+    PARSER_H265_IDR_SEEN                               = 1 << 3,
+    PARSER_H265_SLICE_SEEN                             = 1 << 4,
 };
 
 typedef enum {
