@@ -1,11 +1,27 @@
-/*
- * secmem_ca.h
- *
- * Copyright (C) 2019 Amlogic, Inc. All rights reserved.
- *
- *  Created on: Feb 2, 2020
- *      Author: tao
- */
+// Copyright (C) 2020 Amlogic, Inc. All rights reserved.
+//
+// All information contained herein is Amlogic confidential.
+//
+// This software is provided to you pursuant to Software License
+// Agreement (SLA) with Amlogic Inc ("Amlogic"). This software may be
+// used only in accordance with the terms of this agreement.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification is strictly prohibited without prior written permission
+// from Amlogic.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 
 
 #ifndef _SECMEM_CA_H_
@@ -24,10 +40,6 @@ extern "C" {
 #define SECMME_V2_FLAGS_VP9(x) FLAG_(x, 0xF, 4)
 #define SECMME_V2_FLAGS_VD_INDEX(x) FLAG_(x, 0xF, 9)
 #define SECMME_V2_FLAGS_USAGE(x) FLAG_(x, 0x7, 13)
-
-#define TSN_PATH             "/sys/class/stb/tsn_source"
-#define TSN_IPTV             "local"
-#define TSN_DVB              "demod"
 
 /**
  * Common API
@@ -144,7 +156,15 @@ unsigned int Secure_V2_GetSecmemSize(void *sess,
                            unsigned int *mem_available,
                            unsigned int *handle_capacity,
                            unsigned int *handle_available);
-
+unsigned int Secure_V2_InitSecurePool(void *sess, uint32_t vd_index, uint32_t usage,
+                           uint32_t flags);
+unsigned int Secure_V2_DestorySecurePool(void *sess);
+unsigned int Secure_V2_UpdateFrameInfo(void *sess,
+                           uint32_t instanceid,
+                           uint32_t codec,
+                           int fd,
+                           uint32_t flags,
+                           uint32_t *size);
 
 /*
  * Sideband API
@@ -153,40 +173,16 @@ unsigned int Secure_SetHandle(uint32_t handle);
 unsigned int Secure_GetHandle(uint32_t *handle);
 
 /*
- * Cas API
+ * Dsc API
  */
-int Secure_SetTSNSource(const char *tsn_path,
-                           const char *tsn_from);
-
-int Secure_CreateDscCtx(
-                           void **secmem_sess);
-
-int Secure_CreateDscPipeline(
-                           void *secmem_sess,
-                           int cas_dsc_idx,
-                           uint32_t video_id,
-                           uint32_t audio_id,
-                           bool av_diff_ecm,
-                           int cur_sid);
-
-void Secure_GetDscParas(
-                           cas_crypto_mode mode,
-                           ca_sc2_algo_type *dsc_algo,
-                           ca_sc2_dsc_type *dsc_type);
-
-int Secure_StartDescrambling(
-                           void *secmem_sess,
-                           int dsc_algo,
-                           int dsc_type,
-                           int video_cas_sid,
-                           int audio_cas_sid);
-
-int Secure_StopDescrambling(
-                           void *secmem_sess);
-
-int Secure_DestroyDscCtx(
-                           void **secmem_sess);
-
+int Dsc_SetTsnSource(const char *tsn_path, const char *tsn_from);
+int Dsc_OpenDev(void **secmem_sess, uint32_t dsc_dev_id);
+int Dsc_CloseDev(void **secmem_sess, uint32_t dsc_dev_id);
+int Dsc_CreateSession(void *secmem_sess, uint32_t session_token, uint32_t dsc_dev_id);
+int Dsc_ReleaseSession(void *secmem_sess, uint32_t session_token);
+int Dsc_GetSessionInfo(void *secmem_sess, uint32_t session_token);
+int Dsc_AllocChannel(void *secmem_sess, uint32_t session_token, uint32_t es_pid);
+int Dsc_FreeChannel(void *secmem_sess, uint32_t session_token, uint32_t es_pid);
 #ifdef __cplusplus
 }
 #endif

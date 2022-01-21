@@ -1,11 +1,27 @@
-/*
- * secmem_types.h
- *
- *Copyright (C) 2020 Amlogic, Inc. All rights reserved.
- *
- *  Created on: 2020年3月30日
- *      Author: tao
- */
+// Copyright (C) 2020 Amlogic, Inc. All rights reserved.
+//
+// All information contained herein is Amlogic confidential.
+//
+// This software is provided to you pursuant to Software License
+// Agreement (SLA) with Amlogic Inc ("Amlogic"). This software may be
+// used only in accordance with the terms of this agreement.
+//
+// Redistribution and use in source and binary forms, with or without
+// modification is strictly prohibited without prior written permission
+// from Amlogic.
+//
+// THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+// "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+// LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+// A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+// OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+// SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+// LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+// DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+// THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+// (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+// OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 
 #ifndef _SECMEM_TYPES_H_
 #define _SECMEM_TYPES_H_
@@ -101,35 +117,19 @@ enum {
     PARSER_H265_SLICE_SEEN                             = 1 << 4,
 };
 
-typedef enum {
-    ALGO_INVALID = -1,
-    ALGO_AES_CBC = 0,
-    ALGO_AES_CTR = 1,
-    ALGO_DVB_CSA2 = 2,
-    ALGO_DVB_CSA3 = 3,
-    ALGO_AES_OFB = 4,
-    ALGO_AES_SCTE = 5,
-} cas_crypto_mode;
+enum {
+    CAS_DSC_SUCCESS                                    = 0,
+    CAS_DSC_ERROR                                      = 0x1000,
+    CAS_DSC_ITEM_NOT_FOUND,
+    CAS_DSC_NOT_SUPPORT,
+    CAS_DSC_RETRY,
+    CAS_DSC_ERROR_MAX
+};
 
-typedef enum {
-    CA_ALGO_AES_ECB_CLR_END,
-    CA_ALGO_AES_ECB_CLR_FRONT,
-    CA_ALGO_AES_CBC_CLR_END,
-    CA_ALGO_AES_CBC_IDSA,
-    CA_ALGO_CSA2,
-    CA_ALGO_DES_SCTE41,
-    CA_ALGO_DES_SCTE52,
-    CA_ALGO_TDES_ECB_CLR_END,
-    CA_ALGO_CPCM_LSA_MDI_CBC,
-    CA_ALGO_CPCM_LSA_MDD_CBC,
-    CA_ALGO_CSA3,
-    CA_ALGO_ASA,
-    CA_ALGO_ASA_LIGHT
-} ca_sc2_algo_type;
+typedef struct {
+    uint32_t kt_count;
+    uint32_t kt_buf_len;
+    uint8_t *kt_buf;
+} key_table_info;
 
-typedef enum {
-    CA_DSC_COMMON_TYPE,
-    CA_DSC_TSD_TYPE,/*just support AES descramble.*/
-    CA_DSC_TSE_TYPE/*just support AES enscramble.*/
-} ca_sc2_dsc_type;
 #endif /*_SECMEM_TYPES_H_ */
