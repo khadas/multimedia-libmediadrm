@@ -35,7 +35,8 @@ enum {
 enum {
     SECMEM_TVP_TYPE_NONE                               = 0,
     SECMEM_TVP_TYPE_FHD,
-    SECMEM_TVP_TYPE_UHD
+    SECMEM_TVP_TYPE_UHD,
+    SECMEM_TVP_TYPE_CUSTOM
 };
 
 enum {
