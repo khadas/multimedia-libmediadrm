@@ -80,7 +80,7 @@ typedef void *  amlWfdHdcpHandle;
 /** Define encrypt and decrypt's information */
 typedef struct amlWfdHdcpDataInfo
 {
-    uint32_t isAudio;               //[IN]    audio use clear buffer should be set to 0 and video is use secure buffer set to 1
+    uint32_t isAudio;               //[IN]    audio use clear buffer should be set to 1 and video is use secure buffer set to 0
     uint8_t * in;                   //[INOUT] a buffer pointer for input encrypt buffer
     uint8_t * out;                  //[INOUT] a buffer pointer for output decrypt buffer for audio in and out can be same
     uint32_t inSize;                //[IN]    input buffer's data's size, must be sure out's buffer size is >= (inputbuffer's size + 4)
@@ -172,7 +172,7 @@ amlWfdHdcpResultType amlWfdHdcpDecrypt(amlWfdHdcpHandle handle, amlWfdHdcpDataIn
         Success HDCP_RESULT_SUCCESS
         Failed  return other
 */
-amlWfdHdcpResultType amlWfdHdcpGetSupportLevel(amlWfdHdcpHandle handle, amlWfdHdcpEventType * level);
+amlWfdHdcpResultType amlWfdHdcpGetSupportLevel(amlWfdHdcpHandle handle, amlWfdHdcpLevel * level);
 
 #ifdef __cplusplus
 }
