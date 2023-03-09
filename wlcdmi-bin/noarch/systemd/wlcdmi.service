@@ -1,0 +1,14 @@
+[Unit]
+Description=wlcdmi server
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/wlcdmi_server
+ExecStop=/bin/kill $MAINPID
+KillMode=mixed
+Restart=always
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
+
