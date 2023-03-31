@@ -1,0 +1,9 @@
+prefix=/usr
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: wlcdmi
+Description: wlcdmi: wlcdmi
+Version: 1.0
+Libs: -L${libdir} -lwlcdmi
+Cflags: -I${includedir}
