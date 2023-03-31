@@ -107,6 +107,11 @@ unsigned int Secure_V2_MemExport(void *sess,
                            uint32_t handle,
                            int *fd,
                            uint32_t *maxsize);
+unsigned int Secure_V2_MemAllocDMA(void *sess,
+                           uint32_t size,
+                           int *fd,
+                           uint32_t *handle,
+                           uint32_t *maxsize);
 unsigned int Secure_V2_FdToHandle(void *sess,
                            int fd);
 unsigned int Secure_V2_FdToPaddr(void *sess,
@@ -166,7 +171,7 @@ unsigned int Secure_V2_GetSecmemSize(void *sess,
                            unsigned int *handle_available);
 unsigned int Secure_V2_InitSecurePool(void *sess, uint32_t vd_index, uint32_t usage,
                            uint32_t flags);
-unsigned int Secure_V2_DestorySecurePool(void *sess);
+unsigned int Secure_V2_DestroySecurePool(void *sess);
 unsigned int Secure_V2_UpdateFrameInfo(void *sess,
                            uint32_t instanceid,
                            uint32_t codec,
