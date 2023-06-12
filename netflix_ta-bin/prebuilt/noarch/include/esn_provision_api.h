@@ -1,5 +1,5 @@
 /*
- * ESN key provsioning API
+ * ESN key provisioning API
  */
 
 #ifdef __cplusplus
