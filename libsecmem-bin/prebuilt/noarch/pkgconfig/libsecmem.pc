@@ -5,5 +5,5 @@ includedir=${prefix}/include
 Name: secmem
 Description: secmem: secmem
 Version: 2.2
-Libs: -L${libdir} -lsecmem -pthread -lteec -lmediahal_resman
+Libs: -L${libdir} -lsecmem -pthread -lteec
 Cflags: -I${includedir} -pthread
