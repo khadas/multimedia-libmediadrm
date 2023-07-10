@@ -102,4 +102,5 @@ int wlcdmi_crypto_decrypt(WLCdmiCrypto *crypto,
         uint32_t cbEncrypted,
         uint8_t *pbEncrypted,
         int memFd);
+const char *wlcdmi_version();
 #endif /* INCLUDE_WLCDMI_H_ */
