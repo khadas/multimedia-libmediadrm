@@ -182,7 +182,12 @@ unsigned int Secure_V2_UpdateFrameInfo(void *sess,
                            int fd,
                            uint32_t flags,
                            uint32_t *size);
-
+unsigned int Secure_V2_GetFreeBlockCount(void *sess,
+                            uint32_t handle,
+                            uint32_t frame_size,
+                            uint32_t *block_count,
+                            uint32_t *block_free_count);
+unsigned int Secure_V2_PoolFlush(void *sess);
 /*
  * Sideband API
  */
