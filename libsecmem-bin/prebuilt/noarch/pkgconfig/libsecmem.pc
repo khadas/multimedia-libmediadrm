@@ -1,0 +1,9 @@
+prefix=/usr
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: secmem
+Description: secmem: secmem
+Version: 2.2
+Libs: -L${libdir} -lsecmem -pthread -lteec -lmediahal_resman
+Cflags: -I${includedir} -pthread
