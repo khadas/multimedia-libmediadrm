@@ -63,6 +63,10 @@ int wlcdmi_session_run(WLCdmiSession *session);
 int wlcdmi_session_update(WLCdmiSession *session,
         const uint8_t *pbResponse,
         uint32_t cbResponse);
+void wlcdmi_session_set_parameter(WLCdmiSession *session,
+        uint32_t paramIndex,
+        uint8_t *pbParamData,
+        size_t cbParamData);
 WLCdmiCrypto *wlcdmi_session_open_crypto(WLCdmiSession *session,
         const uint8_t *pbKeyId,
         size_t cbKeyId,
