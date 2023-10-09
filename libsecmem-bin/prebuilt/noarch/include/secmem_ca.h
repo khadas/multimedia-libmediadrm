@@ -37,10 +37,12 @@ extern "C" {
 
 #define FLAG_(x, mask, shift) ((x & (mask)) << shift)
 #define SECMEM_V2_FLAGS_TVP(x) FLAG_(x, 0xF, 0)
-#define SECMEM_V2_FLAGS_VP9(x) FLAG_(x, 0xF, 4)
+#define SECMEM_V2_FLAGS_CODEC(x) FLAG_(x, 0xF, 4)
 #define SECMEM_V2_FLAGS_VD_INDEX(x) FLAG_(x, 0xF, 9)
 #define SECMEM_V2_FLAGS_USAGE(x) FLAG_(x, 0x7, 13)
 #define SECMEM_V2_FLAGS_MEM_LEVEL(x) FLAG_(x, 0xF, 17)
+
+#define Secure_V2_MemFillByPaddr(...)   (0)
 
 /**
  * Common API
@@ -92,10 +94,6 @@ unsigned int Secure_V2_MemFill(void *sess,
                            uint32_t offset,
                            uint8_t *buffer,
                            uint32_t size);
-unsigned int Secure_V2_MemFillByPaddr(void *sess,
-                           uint32_t handle,
-                           uint32_t src_paddr,
-                           uint32_t size);
 unsigned int Secure_V2_MemCopy(void *sess,
                            uint32_t out_handle,
                            uint32_t in_handle,
@@ -103,6 +101,11 @@ unsigned int Secure_V2_MemCopy(void *sess,
                            uint32_t dst_offset[],
                            uint32_t src_offset[],
                            uint32_t size[]);
+unsigned int Secure_V2_MemCopyPhy(uint32_t dst_handle,
+                           uint32_t dst_offset,
+                           uint32_t src_phyaddr,
+                           uint32_t src_offset,
+                           uint32_t size);
 unsigned int Secure_V2_MemCheck(void *sess,
                            uint32_t handle,
                            uint8_t *buffer,
@@ -188,6 +191,7 @@ unsigned int Secure_V2_GetFreeBlockCount(void *sess,
                             uint32_t *block_count,
                             uint32_t *block_free_count);
 unsigned int Secure_V2_PoolFlush(void *sess);
+
 /*
  * Sideband API
  */
