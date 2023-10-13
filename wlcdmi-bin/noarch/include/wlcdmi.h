@@ -30,6 +30,22 @@
 typedef struct _WLCdmiSession        WLCdmiSession;
 typedef struct _WLCdmiCrypto         WLCdmiCrypto;
 
+enum WLCDMI_SCHEME_TYPE
+{
+    WLCDMI_SCHEME_DEFAULT = 0,
+    WLCDMI_SCHEME_CENC,
+    WLCDMI_SCHEME_CENS,
+    WLCDMI_SCHEME_CBC1,
+    WLCDMI_SCHEME_CBCS,
+};
+
+enum WLCDMI_PARAM_INDEX
+{
+    WLCDMI_PARAM_UNUSED = 0,
+    WLCDMI_PARAM_AUDIO_CODEC_TYPE,
+    WLCDMI_PARAM_VMX_SERVER_ADDRESS,
+};
+
 typedef struct {
     void (*key_message_callback)(WLCdmiSession *session,
             void* pUserData,
@@ -52,6 +68,7 @@ typedef struct {
 void wlcdmi_close();
 WLCdmiSession *wlcdmi_open_session (const char *pbIdentifier,
         uint32_t dwType,
+        uint32_t dwScheme,
         uint8_t *pbInitData,
         size_t cbInitData,
         uint8_t *pbCdmData,
