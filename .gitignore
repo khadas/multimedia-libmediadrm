@@ -1,2 +1,4 @@
 playready-bin
 widevine-bin
+*.elf
+*.debug
