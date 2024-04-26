@@ -26,17 +26,16 @@
 
 #ifndef __YOUTUBE_API_H__
 #define __YOUTUBE_API_H__
-
+#include <stdint.h>
 #ifdef  __cplusplus
 extern "C" {
 #endif
 
-int yt_init(void);
+int32_t yt_init(void);
 
 void yt_exit(void);
-
-int yt_hmac_sha256(const uint8_t* message, size_t message_len,
-                    uint8_t* signature, size_t* signature_len);
+int32_t yt_hmac_sha256(const uint8_t* message, size_t message_len,
+        uint8_t* signature, size_t* signature_len);
 
 #ifdef  __cplusplus
 }

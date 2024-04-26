@@ -1,0 +1,9 @@
+prefix=/usr
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: wfd_hdcp
+Description: wfd_hdcp: wfd_hdcp
+Version: 1.0
+Libs: -L${libdir} -lwfd_hdcp -lteec -pthread -lrt
+Cflags: -I${includedir} -pthread

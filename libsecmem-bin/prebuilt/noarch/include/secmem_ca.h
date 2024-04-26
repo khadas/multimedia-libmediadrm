@@ -51,6 +51,8 @@ unsigned int Secure_GetSecmemSize(void);
 unsigned int Secure_GetVersion(void);
 unsigned int Secure_NegotiateVersion(unsigned int expected);
 unsigned int Secure_GetBufferConfig(uint32_t *count, uint32_t *size);
+unsigned int Secure_GetResourceAvail(unsigned int *resource_free,
+                                     unsigned int *resource_available);
 
 /**
  * V1 API

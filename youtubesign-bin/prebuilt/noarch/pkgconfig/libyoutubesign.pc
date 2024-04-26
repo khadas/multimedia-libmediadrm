@@ -1,0 +1,9 @@
+prefix=/usr
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: youtubesign
+Description: youtubesign: youtubesign
+Version: 1.0
+Libs: -L${libdir} -lyoutubesign -lteec
+Cflags: -I${includedir}

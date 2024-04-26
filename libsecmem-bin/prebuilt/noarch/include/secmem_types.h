@@ -86,6 +86,7 @@ enum {
 
 enum {
     SECMEM_CAS_ID_TEST                                 = 0,
+    SECMEM_CAS_ID_CUSTOMER_KAON,
     SECMEM_CAS_ID_MAX
 };
 
