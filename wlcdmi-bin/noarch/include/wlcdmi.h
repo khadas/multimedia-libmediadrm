@@ -27,8 +27,15 @@
 
 #include "wayland-client-core.h"
 
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 typedef struct _WLCdmiSession        WLCdmiSession;
 typedef struct _WLCdmiCrypto         WLCdmiCrypto;
+typedef struct _WLCasContext      WLCasContext;
+
 
 enum WLCDMI_SCHEME_TYPE
 {
@@ -44,6 +51,14 @@ enum WLCDMI_PARAM_INDEX
     WLCDMI_PARAM_UNUSED = 0,
     WLCDMI_PARAM_AUDIO_CODEC_TYPE,
     WLCDMI_PARAM_VMX_SERVER_ADDRESS,
+};
+
+enum WLCDMI_CUSTOM_EVENT_TYPE
+{
+    WLCDMI_CUSTOM_EVENT_UNUSED = 0,
+    WLCDMI_CUSTOM_EVENT_KEY_RETRIEVAL_STATUS,
+    WLCDMI_CUSTOM_EVENT_OUTPUT_CONTROL,
+    WLCDMI_CUSTOM_EVENT_OPERATOR_DATA,
 };
 
 typedef struct {
@@ -63,6 +78,11 @@ typedef struct {
             void* pUserData,
             uint32_t dwError,
             const char *pbMessage);
+    void (*custom_event_callback)(WLCdmiSession *session,
+            void* pUserData,
+            uint32_t type,
+            const char *pbEvent,
+            const uint32_t cbEvent);
 } wlcdmi_callback_t;
 
 void wlcdmi_close();
@@ -124,4 +144,109 @@ int wlcdmi_crypto_decrypt(WLCdmiCrypto *crypto,
         uint8_t *pbEncrypted,
         int memFd);
 const char *wlcdmi_version();
+//////CAS/////////////////////////////////////////////////////////////////////////
+enum WLCAS_EVENT_TYPE
+{
+    WLCAS_EVENT_PROVISION_STATUS = 0,      // 0: fail, 1: success
+    WLCAS_EVENT_DESCRAMBLE_STATUS,         // 0: success, other value: refer ca document
+    WLCAS_EVENT_FINGER_PRINT,
+    WLCAS_EVENT_SET_PARAMETER,
+    WLCAS_EVENT_SESSION_SELECT_AUDIO,
+
+};
+enum WLCAS_INFO_TYPE
+{
+    WLCAS_INFO_CHIPID = 1,
+    WLCAS_INFO_CA_VERSION,
+};
+
+enum WLCAS_INTENT_TYPE
+{
+    WLCAS_INTENT_LIVE = 0,
+    WLCAS_INTENT_RECORD,
+    WLCAS_INTENT_PLAYBACK,
+    WLCAS_INTENT_OTT,
+    WLCAS_INTENT_INVALID,
+};
+
+typedef struct
+{
+    void (*cas_callback)(WLCasContext *context,
+            void *pUserData,
+            int event,
+            int arg,
+            const uint8_t *data,
+            uint32_t size);
+    void (*cas_session_callback)(WLCasContext *context,
+            void *pUserData,
+            int event,
+            int arg,
+            const uint8_t *data,
+            uint32_t size,
+            uint32_t sessionId);
+} wlcas_callback_t;
+
+
+WLCasContext *wlcas_open(const char *pbIdentifier,
+            wlcas_callback_t *pCallback,
+            void *pUserData); // support cas name and ca_system_id
+int wlcas_set_private_data(WLCasContext *context,
+            const uint8_t *pbPrivateData,
+            uint32_t uSize);
+int wlcas_provision(WLCasContext *context,
+            const char *pbProvisionString,
+            int timeout_ms);
+int wlcas_process_emm(WLCasContext *context,
+            const uint8_t *pbBuffer,
+            uint32_t uSize);
+int wlcas_send_event(WLCasContext *context,
+            int event,
+            int arg,
+            const uint8_t *pbEventData,
+            uint32_t uSize);
+int wlcas_refresh_entitlements(WLCasContext *context,
+            int refreshType,
+            const uint8_t *pbRefreshData,
+            uint32_t uSize);
+int wlcas_get_info(WLCasContext *context,
+            int iInfoType,
+            uint8_t *pbBuffer,
+            uint32_t *puSize);
+void wlcas_close(WLCasContext *context);
+
+
+uint32_t wlcas_context_open_session(WLCasContext *context,
+            int intent,
+            int mode);
+int wlcas_session_set_private_data(WLCasContext *context,
+            uint32_t sessionid,
+            const uint8_t *pbPrivateData,
+            uint32_t uSize);
+int wlcas_session_process_ecm(WLCasContext *context,
+            uint32_t sessionid,
+            int isSection,
+            int isvecm,
+            int ecmpid,
+            const uint8_t *pbBuffer,
+            uint32_t uSize);
+int wlcas_session_send_event(WLCasContext *context,
+            uint32_t sessionid,
+            int event,
+            int arg,
+            const uint8_t *pbEventData,
+            uint32_t uSize);
+int wlcas_session_decrypt(WLCasContext *context,
+            uint32_t sessionid,
+            uint8_t *pbBuffer,
+            uint32_t uSize,
+            int *piBytesProcessed);
+void wlcas_session_close(WLCasContext *context,
+            uint32_t sessionid);
+
+
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif /* INCLUDE_WLCDMI_H_ */
